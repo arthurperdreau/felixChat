@@ -1,0 +1,31 @@
+.login{display: none}
+.chat{display: none}
+.felix{
+    margin-bottom: 5vh;
+    align-items: center;
+    max-width: 50%;
+    display: flex;
+    background-color: #7eea7e;
+    border: solid 1px #135713;
+    border-radius: 50px;
+}
+.user{
+    margin-bottom: 5vh;
+    align-items: center;
+    max-width: 50%;
+    display: flex;
+    background-color: #7dc3e6;
+    border: solid 1px #3f3f6a;
+    border-radius: 50px;
+}
+.profilePictureStyle{
+    margin-left: 3vh;
+    margin-right: 3vh;
+    min-height: 4vh;
+    min-width: 4vh;
+    max-height: 4vh;
+    max-width: 4vh;
+    border-radius: 50px;
+    border: solid 1px #000000;
+
+}
