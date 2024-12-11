@@ -1,6 +1,16 @@
 let token = null
+let valAvatar="1"
 const loginPage = document.querySelector('.login')
 const chatPage = document.querySelector('.chat')
+const buttonChoiceAvatar=document.querySelector('.avatarChoice')
+const avatarBox = document.querySelector('.avatarBox')
+const allAvatar=document.querySelectorAll('.inmputRadioDesign')
+const avatarChoiceBox=document.querySelector('.avatarChoiceBox')
+const logo=document.querySelector('.logo')
+const input=document.querySelectorAll('input')
+input.forEach((input)=>{
+    input.value=""
+})
 
 
 let premierMessageIa = {
@@ -9,7 +19,7 @@ let premierMessageIa = {
 }
 let premierMessageUser = {
     author : "arthur",
-    content : "bonjour je suis Arthur.",
+    content : `bonjour je suis Arthur.`,
 }
 let deuxiemeMessageIa = {
     author : "Felix",
@@ -18,7 +28,34 @@ let deuxiemeMessageIa = {
 
 
 let messages = [premierMessageIa, premierMessageUser, deuxiemeMessageIa]
-async function login(username, password, profilePicture){
+
+logo.addEventListener('click', ()=>{
+    location.reload();
+})
+
+allAvatar.forEach((avatarZ,i) => {
+    avatarZ.addEventListener("click", () => {
+        avatarBox.style.display = "none"
+        if(avatarChoiceBox.firstChild){avatarChoiceBox.firstChild.remove()}
+        currentAvatar = document.createElement("img")
+        currentAvatar.classList.add("currentAvatar")
+        currentAvatar.src = `images/avatar${i+1}.png`
+        avatarChoiceBox.appendChild(currentAvatar)
+
+    })
+})
+
+
+buttonChoiceAvatar.addEventListener("click", ()=>{
+    if(avatarBox.style.display === "none"){
+        avatarBox.style.display = "flex"
+    }else{
+        avatarBox.style.display = "none"
+    }
+})
+
+
+async function login(username, password){
     console.log(username, password)
     let params = {
         method: "POST",
@@ -28,79 +65,91 @@ async function login(username, password, profilePicture){
         body: JSON.stringify({
             username: username,
             password: password,
-            profilePicture: profilePicture
         })
     }
-    profilePicture=params.profilePicture
     return await fetch('https://felix.esdlyon.dev/login', params)
         .then((response) =>  response.json())
         .then((json) => {
-
+            console.log("test",json.token)
             return json.token
         })
 }
 
 
-let photo=""
+
 function displayLoginForm(){
 
-    loginPage.style.display = 'block'
+    loginPage.style.display = 'flex'
     chatPage.style.display = 'none'
-    let profilePicture = document.querySelector('.picture')
-    photo=profilePicture
+    loginPage.classList.add("loginDesign")
     let username = document.querySelector('.username')
     let password = document.querySelector('.password')
+
     let loginButton = document.querySelector('.submitLogin')
     loginButton.addEventListener('click', ()=>{
-
-        login(username.value, password.value , profilePicture.value).then((data) => {
+        let radio=document.querySelectorAll('.inmputRadioDesign')
+        radio.forEach((element,i) => {
+            if(element.checked){
+                valAvatar = i+1;
+            }
+        })
+        login(username.value, password.value).then((data) => {
+            console.log("test4",token)
             token = data
             displayChat()
-            //console.log(token)
+            console.log("test2",token)
         })
     })
 
 }
 
 function displayMessages(){
+    let submitButton = document.querySelector('.chatSubmit')
+    let container= document.querySelector('.content')
+    container.classList.remove("page")
+    container.classList.add("pageChat")
     document.querySelector('.messages').innerHTML = ""
     messages.forEach(message => {
-
         divMessage = document.createElement('div')
         divMessage.classList.add('message')
-        let profile=document.createElement("img")
-        profile.classList.add('profilePictureStyle')
-        let paragraphe = document.createElement('p')
+        avatar = document.createElement('img')
+        avatar.classList.add('profilePictureStyle')
+        let paragraphe = document.createElement('span')
         paragraphe.textContent = message.content
-        divMessage.appendChild(profile)
+        divMessage.appendChild(avatar)
         divMessage.appendChild(paragraphe)
 
 
         if(message.author === "Felix")
         {
-            profile.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVhfSrzFm9YmvHjLxMLy1PrkfEyGkzISV4Jw&s"
+            avatar.src=`images/avatarFelix.png`
             divMessage.classList.add('felix')
         }else{
-            console.log(photo.value)
-            profile.src=photo.value
+            avatar.src=`images/avatar${valAvatar}.png`
             divMessage.classList.add('user')
 
         }
         document.querySelector('.messages').appendChild(divMessage)
     })
-
-
-
 }
 
 function handlePrompt(){
+
     let prompt = document.querySelector('.prompt')
     let submitButton = document.querySelector('.chatSubmit')
 
     submitButton.addEventListener('click', ()=>{
+        let languageUsed=" en français"
+        const inputLanguage=document.querySelectorAll('.inputLanguage')
+        inputLanguage.forEach(language => {
+            if(language.checked){
+                languageUsed=language.value
+            }
+        })
+
         addMessageToMessagesArray({
             author : "User",
-            content:prompt.value
+            content:prompt.value+languageUsed
         })
         displayMessages()
 
@@ -113,11 +162,13 @@ function handlePrompt(){
             })
             displayMessages()
         })
+
     })
 }
 
 async function askIa(prompt)
 {
+
     let params = {
         method: "POST",
         headers: {
@@ -128,6 +179,7 @@ async function askIa(prompt)
             prompt: prompt,
         })
     }
+    console.log("test3",token)
     return await fetch('https://felix.esdlyon.dev/ollama', params)
         .then(response => response.json())
         .then((json) => {
@@ -143,17 +195,23 @@ function addMessageToMessagesArray(message)
 
 function displayChat(){
     chatPage.style.display = 'block'
+    loginPage.classList.remove("loginDesign")
     loginPage.style.display = 'none'
 
     displayMessages()
     handlePrompt()
 }
 
+const startButton = document.querySelector('.start')
 
+startButton.addEventListener('click', ()=>{
+    startButton.style.display='none'
 
-if(!token){
-    displayLoginForm()
-}else{
-    displayChat()
-    displayMessages()
-}
+    if(!token){
+        displayLoginForm()
+    }else{
+        displayChat()
+        displayMessages()
+    }
+})
+
