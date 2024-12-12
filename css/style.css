@@ -151,7 +151,7 @@ body,html{
     color: white;
     font-weight: bold;
     min-height: 6vh;
-    padding: 2vh;
+    padding: 20px;
 }
 .chargement{
     display: none;
@@ -185,7 +185,7 @@ body,html{
     font-weight: bold;
     color: #e89d45;
     min-height: 6vh;
-    padding: 2vh;
+    padding: 20px;
     width: auto;
 
 }
