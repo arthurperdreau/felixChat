@@ -15,12 +15,14 @@ body,html{
     border : #e89d45 solid 2px;
     border-radius: 15px;
     padding-left: 1vh;
+
 }
 .chatSubmit{
     background-color: #e89d45;
     border : #e89d45 solid 2px;
     color: white;
     font-weight: bold;
+    margin-left: 1vh;
 }
 .language{
     color: white;
@@ -109,7 +111,19 @@ body,html{
     padding-left: 20px;
     padding-right: 20px;
     margin-bottom: 8vh;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: start;
+    position: relative;
 }
+
+@keyframes start{
+    0% { height: auto;width:auto; }
+    50% {height: auto;width:auto;font-size: 60px}
+    100% {height: auto;width: auto;font-size: 40px}
+
+}
+
 .login{
     display: none;
 }
@@ -127,6 +141,7 @@ body,html{
     justify-content: center;
 }
 .felix{
+    margin-top: 1vh;
     align-items: center;
     max-width: 50%;
     width: auto;
@@ -136,8 +151,30 @@ body,html{
     color: white;
     font-weight: bold;
     min-height: 6vh;
+    padding: 2vh;
+}
+.chargement{
+    display: none;
+    width: 30px;
+    height: 30px;
+    margin-left: 2vh;
+    opacity: 1;
+    border-radius: 50%;
+
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: chargement;
+
+    position: relative;
+}
+
+@keyframes chargement{
+    0% {opacity: 1;}
+    50% {opacity: 0.1;}
+    100% {opacity: 1;}
 }
 .user{
+    margin-top: 1vh;
     margin-left: 50%;
     align-items: center;
     max-width: 50%;
@@ -148,6 +185,8 @@ body,html{
     font-weight: bold;
     color: #e89d45;
     min-height: 6vh;
+    padding: 2vh;
+
 }
 .profilePictureStyle{
     margin-left: 3vh;
@@ -157,7 +196,6 @@ body,html{
     max-height: 4vh;
     max-width: 4vh;
     border-radius: 50px;
-    border: solid 1px #000000;
 
 }
 input[type=radio] {

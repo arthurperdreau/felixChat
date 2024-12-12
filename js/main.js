@@ -7,11 +7,8 @@ const avatarBox = document.querySelector('.avatarBox')
 const allAvatar=document.querySelectorAll('.inmputRadioDesign')
 const avatarChoiceBox=document.querySelector('.avatarChoiceBox')
 const logo=document.querySelector('.logo')
-const input=document.querySelectorAll('input')
-input.forEach((input)=>{
-    input.value=""
-})
-
+const input=document.querySelector('.username')
+input.value=""
 
 let premierMessageIa = {
     author : "Felix",
@@ -55,6 +52,7 @@ buttonChoiceAvatar.addEventListener("click", ()=>{
 })
 
 
+
 async function login(username, password){
     console.log(username, password)
     let params = {
@@ -94,11 +92,13 @@ function displayLoginForm(){
             }
         })
         login(username.value, password.value).then((data) => {
-            console.log("test4",token)
-            token = data
-            displayChat()
-            console.log("test2",token)
+                token = data
+                if(!(token===null||token===undefined)){
+                displayChat()
+                }
         })
+
+
     })
 
 }
@@ -141,6 +141,7 @@ function handlePrompt(){
     submitButton.addEventListener('click', ()=>{
         let languageUsed=" en français"
         const inputLanguage=document.querySelectorAll('.inputLanguage')
+
         inputLanguage.forEach(language => {
             if(language.checked){
                 languageUsed=language.value
@@ -149,13 +150,14 @@ function handlePrompt(){
 
         addMessageToMessagesArray({
             author : "User",
-            content:prompt.value+languageUsed
+            content:(prompt.value+languageUsed)
         })
+
         displayMessages()
 
 
-        askIa(prompt.value).then((data) => {
-            console.log(data)
+        askIa((prompt.value+languageUsed)).then((data) => {
+            console.log(prompt.value)
             addMessageToMessagesArray({
                 author : "Felix",
                 content:data
@@ -166,9 +168,8 @@ function handlePrompt(){
     })
 }
 
-async function askIa(prompt)
-{
-
+let sablier=document.querySelector('.chargement')
+async function askIa(prompt) {
     let params = {
         method: "POST",
         headers: {
@@ -179,13 +180,16 @@ async function askIa(prompt)
             prompt: prompt,
         })
     }
-    console.log("test3",token)
+    sablier.style.display="block"
     return await fetch('https://felix.esdlyon.dev/ollama', params)
         .then(response => response.json())
         .then((json) => {
-            console.log(json)
+            sablier.style.display = 'none'
             return json.message
+
         })
+
+
 }
 
 function addMessageToMessagesArray(message)
