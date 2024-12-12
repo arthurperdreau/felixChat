@@ -190,7 +190,6 @@ body,html{
 
 }
 .profilePictureStyle{
-    margin-left: 3vh;
     margin-right: 1vh;
     min-height: 4vh;
     min-width: 4vh;
@@ -219,5 +218,5 @@ input[type=radio] {
     flex-direction: column;
 }
 .paragraphe{
-    max-width: 70%;
+
 }
