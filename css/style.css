@@ -186,6 +186,7 @@ body,html{
     color: #e89d45;
     min-height: 6vh;
     padding: 2vh;
+    width: auto;
 
 }
 .profilePictureStyle{
