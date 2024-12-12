@@ -18,11 +18,10 @@ body,html{
 
 }
 .chatSubmit{
-    background-color: #e89d45;
-    border : #e89d45 solid 2px;
-    color: white;
-    font-weight: bold;
+    height: 3vh;
+    width: 3vh;
     margin-left: 1vh;
+    fill: white;
 }
 .language{
     color: white;

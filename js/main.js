@@ -151,7 +151,7 @@ function handlePrompt(){
 
         addMessageToMessagesArray({
             author : "User",
-            content:(prompt.value+languageUsed)
+            content:(prompt.value)
         })
 
         displayMessages()
