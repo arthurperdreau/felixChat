@@ -115,6 +115,7 @@ function displayMessages(){
         avatar = document.createElement('img')
         avatar.classList.add('profilePictureStyle')
         let paragraphe = document.createElement('span')
+        paragraphe.classList.add('paragraphe')
         paragraphe.textContent = message.content
         divMessage.appendChild(avatar)
         divMessage.appendChild(paragraphe)
