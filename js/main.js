@@ -68,7 +68,6 @@ async function login(username, password){
     return await fetch('https://felix.esdlyon.dev/login', params)
         .then((response) =>  response.json())
         .then((json) => {
-            console.log("test",json.token)
             return json.token
         })
 }
@@ -140,6 +139,11 @@ function handlePrompt(){
     let submitButton = document.querySelector('.chatSubmit')
 
     submitButton.addEventListener('click', ()=>{
+        let smileyText = prompt.value
+            .replace(/:-\)/g, "😊")
+            .replace(/:-\(/g, "☹️")
+            .replace(/:D/g, "😁")
+            .replace(/XD|xD|xd/g,"🤣")
         let languageUsed=" en français"
         const inputLanguage=document.querySelectorAll('.inputLanguage')
 
@@ -151,7 +155,7 @@ function handlePrompt(){
 
         addMessageToMessagesArray({
             author : "User",
-            content:(prompt.value)
+            content:(smileyText)
         })
 
         displayMessages()
